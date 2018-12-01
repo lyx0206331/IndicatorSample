@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Indicator-Sample</string>
+    <string name="app_name">IndicatorSample</string>
+
+    <string name="dots_indicator">DotsIndicator</string>
+    <string name="spring_dots_indicator">SpringDotsIndicator</string>
+    <string name="worm_dots_indicator">WormDotsIndicator</string>
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context
 import android.database.DataSetObserver
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.support.annotation.ColorInt
+import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
@@ -11,8 +13,6 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.annotation.ColorInt
-import androidx.viewpager.widget.ViewPager
 import kotlin.math.abs
 
 /**
@@ -30,7 +30,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     val dots by lazy {
         arrayListOf<ImageView>()
     }
-    var mViewPager: ViewPager? = null
+    var viewPager: ViewPager? = null
         set(value) {
             field = value
             setUpViewPager()
@@ -82,11 +82,11 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun refreshDots() {
-        if (mViewPager != null && mViewPager?.adapter != null) {
-            if (dots?.size.orZero() < mViewPager?.adapter?.count.orZero()) {
-                addDots(mViewPager?.adapter?.count.orZero() - dots?.size.orZero())
-            } else if (dots?.size.orZero() > mViewPager?.adapter?.count.orZero()) {
-                removeDots(dots?.size.orZero() - mViewPager?.adapter?.count.orZero())
+        if (viewPager != null && viewPager?.adapter != null) {
+            if (dots?.size.orZero() < viewPager?.adapter?.count.orZero()) {
+                addDots(viewPager?.adapter?.count.orZero() - dots?.size.orZero())
+            } else if (dots?.size.orZero() > viewPager?.adapter?.count.orZero()) {
+                removeDots(dots?.size.orZero() - viewPager?.adapter?.count.orZero())
             }
             setUpDotsAnimators()
         } else {
@@ -96,7 +96,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun setUpDotsAnimators() {
-        mViewPager?.apply {
+        viewPager?.apply {
             if (adapter != null && adapter?.count.orZero() > 0) {
                 if (currentPage < dots?.size.orZero()) {
                     val dot = dots?.get(currentPage)
@@ -182,7 +182,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun setUpViewPager() {
-        mViewPager?.adapter?.apply {
+        viewPager?.adapter?.apply {
             registerDataSetObserver(object : DataSetObserver() {
                 override fun onChanged() {
                     super.onChanged()
@@ -217,8 +217,8 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
             (iv.background as GradientDrawable).setColor(dotsColor)
 
             dot.setOnClickListener {
-                if (dotsClickable && mViewPager != null && mViewPager?.adapter != null && i < mViewPager?.adapter?.count.orZero()) {
-                    mViewPager?.setCurrentItem(i, true)
+                if (dotsClickable && viewPager != null && viewPager?.adapter != null && i < viewPager?.adapter?.count.orZero()) {
+                    viewPager?.setCurrentItem(i, true)
                 }
             }
 
