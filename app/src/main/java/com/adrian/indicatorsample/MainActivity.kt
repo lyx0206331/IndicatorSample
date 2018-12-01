@@ -1,5 +1,6 @@
 package com.adrian.indicatorsample
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Window
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = ViewPagerAdapter()
         viewPager.setPageTransformer(true, ZoomOutPageTransformer())
 
-        dotsIndicator.viewPager = viewPager
+        dotsIndicator.mViewPager = viewPager
+//        dotsIndicator.dotsClickable = false
+        dotsIndicator.dotsColor = Color.CYAN
     }
 }

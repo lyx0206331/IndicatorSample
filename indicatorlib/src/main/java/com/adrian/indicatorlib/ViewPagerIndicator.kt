@@ -30,7 +30,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     val dots by lazy {
         arrayListOf<ImageView>()
     }
-    var viewPager: ViewPager? = null
+    var mViewPager: ViewPager? = null
         set(value) {
             field = value
             setUpViewPager()
@@ -43,15 +43,15 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     var dotsWidthFactor = DEFAULT_WIDTH_FACTOR
     @ColorInt
     var dotsColor = DEFAULT_POINT_COLOR
+        set(value) {
+            field = value
+            setUpCircleColors(value)
+        }
     var dotsClickable = true
     var pageChangedListener: ViewPager.OnPageChangeListener? = null
 
     init {
         orientation = HORIZONTAL
-
-//        dotsSize = dp2px(context, 16)
-//        dotsSpacing = dp2px(context, 4)
-//        dotsCornerRadius = dotsSize / 2
 
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DotsIndicator, defStyleAttr, 0)
@@ -82,11 +82,11 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun refreshDots() {
-        if (viewPager != null && viewPager?.adapter != null) {
-            if (dots?.size.orZero() < viewPager?.adapter?.count.orZero()) {
-                addDots(viewPager?.adapter?.count.orZero() - dots?.size.orZero())
-            } else if (dots?.size.orZero() > viewPager?.adapter?.count.orZero()) {
-                removeDots(dots?.size.orZero() - viewPager?.adapter?.count.orZero())
+        if (mViewPager != null && mViewPager?.adapter != null) {
+            if (dots?.size.orZero() < mViewPager?.adapter?.count.orZero()) {
+                addDots(mViewPager?.adapter?.count.orZero() - dots?.size.orZero())
+            } else if (dots?.size.orZero() > mViewPager?.adapter?.count.orZero()) {
+                removeDots(dots?.size.orZero() - mViewPager?.adapter?.count.orZero())
             }
             setUpDotsAnimators()
         } else {
@@ -96,7 +96,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun setUpDotsAnimators() {
-        viewPager?.apply {
+        mViewPager?.apply {
             if (adapter != null && adapter?.count.orZero() > 0) {
                 if (currentPage < dots?.size.orZero()) {
                     val dot = dots?.get(currentPage)
@@ -131,7 +131,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun setUpOnPageChangedListener() {
         pageChangedListener = object : ViewPager.OnPageChangeListener {
 
-            var lastPage: Int = 0
+            var lastPage = 0
 
             override fun onPageScrollStateChanged(p0: Int) {
             }
@@ -182,7 +182,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun setUpViewPager() {
-        viewPager?.adapter?.apply {
+        mViewPager?.adapter?.apply {
             registerDataSetObserver(object : DataSetObserver() {
                 override fun onChanged() {
                     super.onChanged()
@@ -217,18 +217,14 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
             (iv.background as GradientDrawable).setColor(dotsColor)
 
             dot.setOnClickListener {
-                if (dotsClickable && viewPager != null && viewPager?.adapter != null && i < viewPager?.adapter?.count.orZero()) {
-                    viewPager?.setCurrentItem(i, true)
+                if (dotsClickable && mViewPager != null && mViewPager?.adapter != null && i < mViewPager?.adapter?.count.orZero()) {
+                    mViewPager?.setCurrentItem(i, true)
                 }
             }
 
             dots?.add(iv)
             addView(dot)
         }
-    }
-
-    fun setPointsColor(@ColorInt color: Int) {
-        setUpCircleColors(color)
     }
 
 }
