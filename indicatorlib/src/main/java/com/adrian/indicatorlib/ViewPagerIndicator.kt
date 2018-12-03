@@ -18,7 +18,7 @@ import kotlin.math.abs
 /**
  * date:2018/11/28 16:05
  * author：RanQing
- * description：
+ * description：ViewPager指示器
  */
 class DotsIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
