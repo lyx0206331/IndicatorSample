@@ -2,8 +2,6 @@ package com.adrian.indicatorsample
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,6 +21,6 @@ class MainActivity : AppCompatActivity() {
 
         dotsIndicator.mViewPager = viewPager
 //        dotsIndicator.dotsClickable = false
-        dotsIndicator.selectedColor = Color.CYAN
+//        dotsIndicator.dotsSelectedColor = Color.CYAN
     }
 }

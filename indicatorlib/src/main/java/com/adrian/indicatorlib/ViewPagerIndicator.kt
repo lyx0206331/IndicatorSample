@@ -42,7 +42,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     var currentPage = 0
     var dotsWidthFactor = DEFAULT_WIDTH_FACTOR
     @ColorInt
-    var selectedColor: Int = Color.CYAN
+    var dotsSelectedColor: Int = Color.CYAN
         set(value) {
             field = value
             setUpCircleColors()
@@ -61,6 +61,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
 
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DotsIndicator, defStyleAttr, 0)
+            dotsSelectedColor = a.getColor(R.styleable.DotsIndicator_dotsSelectedColor, DEFAULT_POINT_COLOR)
             dotsColor = a.getColor(R.styleable.DotsIndicator_dotsColor, DEFAULT_POINT_COLOR)
             setUpCircleColors()
 
@@ -182,7 +183,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
                     if (dotWidth.toFloat() == dotsSize) {
                         (background as GradientDrawable).setColor(dotsColor)
                     } else {
-                        (background as GradientDrawable).setColor(selectedColor)
+                        (background as GradientDrawable).setColor(dotsSelectedColor)
                     }
                 }
             }
@@ -213,7 +214,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun setUpCircleColors() {
         for ((index, value) in dots.withIndex()) {
             if (index == currentPage) {
-                ((value.background) as GradientDrawable).setColor(selectedColor)
+                ((value.background) as GradientDrawable).setColor(dotsSelectedColor)
             } else {
                 ((value.background) as GradientDrawable).setColor(dotsColor)
             }

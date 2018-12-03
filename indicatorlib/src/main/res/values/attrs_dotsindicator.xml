@@ -11,6 +11,7 @@
     <attr format="float" name="dampingRatio" />
 
     <declare-styleable name="DotsIndicator">
+        <attr name="dotsSelectedColor" />
         <attr name="dotsColor" />
         <attr name="dotsSize" />
         <attr name="dotsWidthFactor" />
