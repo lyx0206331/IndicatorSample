@@ -137,24 +137,24 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                if (position != currentPage && positionOffset.toInt() == 0 || currentPage < position) {
-                    setDotWidth(dots.get(currentPage), dotsSize.toInt())
+                if (position != currentPage && positionOffset == 0f || currentPage < position) {
+                    setDotWidth(dots[currentPage], dotsSize.toInt())
                     currentPage = position
                 }
 
                 if (abs(currentPage - position) > 1) {
-                    setDotWidth(dots.get(currentPage), dotsSize.toInt())
+                    setDotWidth(dots[currentPage], dotsSize.toInt())
                     currentPage = lastPage
                 }
 
-                var dot = dots.get(currentPage)
+                var dot = dots[currentPage]
 
                 var nextDot: ImageView? = null
                 if (currentPage == position && currentPage + 1 < dots.size.orZero()) {
-                    nextDot = dots.get(currentPage + 1)
+                    nextDot = dots[currentPage + 1]
                 } else if (currentPage > position) {
                     nextDot = dot
-                    dot = dots.get(currentPage - 1)
+                    dot = dots[currentPage - 1]
                 }
 
                 val dotWidth = (dotsSize + (dotsSize * (dotsWidthFactor - 1) * (1 - positionOffset))).toInt()
