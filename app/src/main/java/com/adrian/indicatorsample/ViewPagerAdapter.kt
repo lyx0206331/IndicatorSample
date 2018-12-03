@@ -1,10 +1,10 @@
 package com.adrian.indicatorsample
 
-import android.support.annotation.ColorRes
-import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.viewpager.widget.PagerAdapter
 
 /**
  * date:2018/11/30 11:03

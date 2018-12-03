@@ -1,7 +1,7 @@
 package com.adrian.indicatorsample
 
-import android.support.v4.view.ViewPager
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 import kotlin.math.abs
 import kotlin.math.max
 

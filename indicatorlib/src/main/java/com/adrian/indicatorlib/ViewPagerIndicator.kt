@@ -4,8 +4,6 @@ import android.content.Context
 import android.database.DataSetObserver
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ColorInt
-import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
@@ -13,6 +11,8 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.annotation.ColorInt
+import androidx.viewpager.widget.ViewPager
 import kotlin.math.abs
 
 /**
@@ -83,10 +83,10 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
 
     private fun refreshDots() {
         if (mViewPager != null && mViewPager?.adapter != null) {
-            if (dots?.size.orZero() < mViewPager?.adapter?.count.orZero()) {
-                addDots(mViewPager?.adapter?.count.orZero() - dots?.size.orZero())
-            } else if (dots?.size.orZero() > mViewPager?.adapter?.count.orZero()) {
-                removeDots(dots?.size.orZero() - mViewPager?.adapter?.count.orZero())
+            if (dots.size.orZero() < mViewPager?.adapter?.count.orZero()) {
+                addDots(mViewPager?.adapter?.count.orZero() - dots.size.orZero())
+            } else if (dots.size.orZero() > mViewPager?.adapter?.count.orZero()) {
+                removeDots(dots.size.orZero() - mViewPager?.adapter?.count.orZero())
             }
             setUpDotsAnimators()
         } else {
@@ -98,25 +98,25 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun setUpDotsAnimators() {
         mViewPager?.apply {
             if (adapter != null && adapter?.count.orZero() > 0) {
-                if (currentPage < dots?.size.orZero()) {
-                    val dot = dots?.get(currentPage)
+                if (currentPage < dots.size.orZero()) {
+                    val dot = dots[currentPage]
                     dot.apply {
                         val params = layoutParams as RelativeLayout.LayoutParams
                         params.width = dotsSize.toInt()
-                        dot?.layoutParams = params
+                        dot.layoutParams = params
                     }
                 }
 
                 currentPage = currentItem.orZero()
-                if (currentPage >= dots?.size.orZero()) {
-                    currentPage = dots?.size.orZero() - 1
+                if (currentPage >= dots.size.orZero()) {
+                    currentPage = dots.size.orZero() - 1
                     setCurrentItem(currentPage, false)
                 }
-                val dot = dots?.get(currentPage)
+                val dot = dots[currentPage]
                 dot.apply {
                     val params = layoutParams as RelativeLayout.LayoutParams
                     params.width = (dotsSize * dotsWidthFactor).toInt()
-                    dot?.layoutParams = params
+                    dot.layoutParams = params
                 }
 
                 if (pageChangedListener != null) {
@@ -138,23 +138,23 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 if (position != currentPage && positionOffset.toInt() == 0 || currentPage < position) {
-                    setDotWidth(dots?.get(currentPage), dotsSize.toInt())
+                    setDotWidth(dots.get(currentPage), dotsSize.toInt())
                     currentPage = position
                 }
 
                 if (abs(currentPage - position) > 1) {
-                    setDotWidth(dots?.get(currentPage), dotsSize.toInt())
+                    setDotWidth(dots.get(currentPage), dotsSize.toInt())
                     currentPage = lastPage
                 }
 
-                var dot = dots?.get(currentPage)
+                var dot = dots.get(currentPage)
 
                 var nextDot: ImageView? = null
-                if (currentPage == position && currentPage + 1 < dots?.size.orZero()) {
-                    nextDot = dots?.get(currentPage + 1)
+                if (currentPage == position && currentPage + 1 < dots.size.orZero()) {
+                    nextDot = dots.get(currentPage + 1)
                 } else if (currentPage > position) {
                     nextDot = dot
-                    dot = dots?.get(currentPage - 1)
+                    dot = dots.get(currentPage - 1)
                 }
 
                 val dotWidth = (dotsSize + (dotsSize * (dotsWidthFactor - 1) * (1 - positionOffset))).toInt()
@@ -195,12 +195,12 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun removeDots(count: Int) {
         for (i in 0 until count) {
             removeViewAt(childCount - 1)
-            dots?.removeAt(dots?.size.orZero() - 1)
+            dots.removeAt(dots.size.orZero() - 1)
         }
     }
 
     private fun setUpCircleColors(@ColorInt color: Int) {
-        dots?.forEach {
+        dots.forEach {
             ((it.background) as GradientDrawable).setColor(color)
         }
     }
@@ -222,7 +222,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
                 }
             }
 
-            dots?.add(iv)
+            dots.add(iv)
             addView(dot)
         }
     }
