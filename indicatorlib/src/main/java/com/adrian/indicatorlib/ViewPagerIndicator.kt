@@ -23,7 +23,7 @@ import kotlin.math.abs
 class DotsIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
     companion object {
-        const val DEFAULT_POINT_COLOR = Color.CYAN
+        const val DEFAULT_POINT_COLOR = Color.WHITE
         const val DEFAULT_WIDTH_FACTOR = 2.5f
     }
 
@@ -42,10 +42,16 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
     var currentPage = 0
     var dotsWidthFactor = DEFAULT_WIDTH_FACTOR
     @ColorInt
+    var selectedColor: Int = Color.CYAN
+        set(value) {
+            field = value
+            setUpCircleColors()
+        }
+    @ColorInt
     var dotsColor = DEFAULT_POINT_COLOR
         set(value) {
             field = value
-            setUpCircleColors(value)
+            setUpCircleColors()
         }
     var dotsClickable = true
     var pageChangedListener: ViewPager.OnPageChangeListener? = null
@@ -56,7 +62,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DotsIndicator, defStyleAttr, 0)
             dotsColor = a.getColor(R.styleable.DotsIndicator_dotsColor, DEFAULT_POINT_COLOR)
-            setUpCircleColors(dotsColor)
+            setUpCircleColors()
 
             dotsWidthFactor = a.getFloat(R.styleable.DotsIndicator_dotsWidthFactor, 2.5f)
             if (dotsWidthFactor < 1) {
@@ -68,7 +74,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
 
             a.recycle()
         } else {
-            setUpCircleColors(DEFAULT_POINT_COLOR)
+            setUpCircleColors()
         }
 
         if (isInEditMode) {
@@ -173,6 +179,11 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
                     val dotParams = layoutParams
                     dotParams.width = dotWidth
                     layoutParams = dotParams
+                    if (dotWidth.toFloat() == dotsSize) {
+                        (background as GradientDrawable).setColor(dotsColor)
+                    } else {
+                        (background as GradientDrawable).setColor(selectedColor)
+                    }
                 }
             }
 
@@ -199,9 +210,13 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
         }
     }
 
-    private fun setUpCircleColors(@ColorInt color: Int) {
-        dots.forEach {
-            ((it.background) as GradientDrawable).setColor(color)
+    private fun setUpCircleColors() {
+        for ((index, value) in dots.withIndex()) {
+            if (index == currentPage) {
+                ((value.background) as GradientDrawable).setColor(selectedColor)
+            } else {
+                ((value.background) as GradientDrawable).setColor(dotsColor)
+            }
         }
     }
 

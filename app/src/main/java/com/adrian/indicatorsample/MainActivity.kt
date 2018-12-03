@@ -23,6 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         dotsIndicator.mViewPager = viewPager
 //        dotsIndicator.dotsClickable = false
-        dotsIndicator.dotsColor = Color.CYAN
+        dotsIndicator.selectedColor = Color.CYAN
     }
 }
