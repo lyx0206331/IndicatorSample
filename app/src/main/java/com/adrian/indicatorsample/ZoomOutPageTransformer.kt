@@ -17,29 +17,29 @@ class ZoomOutPageTransformer : ViewPager.PageTransformer {
         const val MIN_ALPHA = .5f
     }
 
-    override fun transformPage(p0: View, p1: Float) {
-        val pageW = p0.width
-        val pageH = p0.height
+    override fun transformPage(page: View, position: Float) {
+        val pageW = page.width
+        val pageH = page.height
 
         when {
-            p1 < -1 -> //向左滑出屏幕
-                p0.alpha = 0f
-            p1 <= 1 -> {
-                val scaleFactor = max(MIN_SCALE, 1 - abs(p1))
+            position < -1 -> //向左滑出屏幕
+                page.alpha = 0f
+            position <= 1 -> {  //修改默认滑动过渡以缩小页面
+                val scaleFactor = max(MIN_SCALE, 1 - abs(position))
                 val vMargin = pageH * (1 - scaleFactor) / 2
                 val hMargin = pageW * (1 - scaleFactor) / 2
-                if (p1 < 0) {
-                    p0.translationX = hMargin - vMargin / 2
+                if (position < 0) {
+                    page.translationX = hMargin - vMargin / 2
                 } else {
-                    p0.translationX = -hMargin + vMargin / 2
+                    page.translationX = -hMargin + vMargin / 2
                 }
 
-                p0.scaleX = scaleFactor
-                p0.scaleY = scaleFactor
+                page.scaleX = scaleFactor
+                page.scaleY = scaleFactor
 
-                p0.alpha = MIN_ALPHA + (scaleFactor - MIN_SCALE) / (1 - MIN_SCALE) * (1 - MIN_ALPHA)
+                page.alpha = MIN_ALPHA + (scaleFactor - MIN_SCALE) / (1 - MIN_SCALE) * (1 - MIN_ALPHA)
             }
-            else -> p0.alpha = 0f
+            else -> page.alpha = 0f   ////向右滑出屏幕
         }
     }
 }
