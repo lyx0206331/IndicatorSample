@@ -42,7 +42,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:dotsSelectedColor="#51C94E"
-        app:dotsColor="@color/md_white_1000"
+        app:dotsUnselectedColor="@color/md_white_1000"
         app:dotsCornerRadius="8dp"
         app:dotsSize="16dp"
         app:dotsSpacing="4dp"

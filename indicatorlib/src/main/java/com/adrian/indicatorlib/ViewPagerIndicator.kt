@@ -48,7 +48,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
             setUpCircleColors()
         }
     @ColorInt
-    var dotsColor = DEFAULT_POINT_COLOR
+    var dotsUnselectedColor = DEFAULT_POINT_COLOR
         set(value) {
             field = value
             setUpCircleColors()
@@ -62,7 +62,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DotsIndicator, defStyleAttr, 0)
             dotsSelectedColor = a.getColor(R.styleable.DotsIndicator_dotsSelectedColor, DEFAULT_POINT_COLOR)
-            dotsColor = a.getColor(R.styleable.DotsIndicator_dotsColor, DEFAULT_POINT_COLOR)
+            dotsUnselectedColor = a.getColor(R.styleable.DotsIndicator_dotsUnselectedColor, DEFAULT_POINT_COLOR)
             setUpCircleColors()
 
             dotsWidthFactor = a.getFloat(R.styleable.DotsIndicator_dotsWidthFactor, 2.5f)
@@ -181,7 +181,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
                     dotParams.width = dotWidth
                     layoutParams = dotParams
                     if (dotWidth.toFloat() == dotsSize) {
-                        (background as GradientDrawable).setColor(dotsColor)
+                        (background as GradientDrawable).setColor(dotsUnselectedColor)
                     } else {
                         (background as GradientDrawable).setColor(dotsSelectedColor)
                     }
@@ -216,7 +216,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
             if (index == currentPage) {
                 ((value.background) as GradientDrawable).setColor(dotsSelectedColor)
             } else {
-                ((value.background) as GradientDrawable).setColor(dotsColor)
+                ((value.background) as GradientDrawable).setColor(dotsUnselectedColor)
             }
         }
     }
@@ -230,7 +230,7 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
             lp.height = dotsSize.toInt()
             lp.setMargins(dotsSpacing.toInt(), 0, dotsSpacing.toInt(), 0)
             (iv.background as GradientDrawable).cornerRadius = dotsCornerRadius
-            (iv.background as GradientDrawable).setColor(dotsColor)
+            (iv.background as GradientDrawable).setColor(dotsUnselectedColor)
 
             dot.setOnClickListener {
                 if (dotsClickable && mViewPager != null && mViewPager?.adapter != null && i < mViewPager?.adapter?.count.orZero()) {
