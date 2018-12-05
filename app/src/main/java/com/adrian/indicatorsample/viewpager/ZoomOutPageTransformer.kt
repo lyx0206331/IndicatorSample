@@ -1,4 +1,4 @@
-package com.adrian.indicatorsample
+package com.adrian.indicatorsample.viewpager
 
 import android.view.View
 import androidx.viewpager.widget.ViewPager

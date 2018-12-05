@@ -1,8 +1,8 @@
-package com.adrian.indicatorsample
+package com.adrian.indicatorsample.viewpager
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.adrian.indicatorsample.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
