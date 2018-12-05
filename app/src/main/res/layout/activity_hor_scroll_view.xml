@@ -9,9 +9,10 @@
     tools:context=".scrollview.HorScrollViewActivity">
 
     <com.adrian.indicatorlib.HorScrollView
-        android:id="@+id/horScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:id="@+id/horScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -20,15 +21,19 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="600dp"
-                android:layout_height="100dp"
-                android:text="asdfa" />
+                    android:layout_width="800dp"
+                    android:layout_height="100dp"
+                    android:text="asdfa" />
         </LinearLayout>
     </com.adrian.indicatorlib.HorScrollView>
 
     <com.adrian.indicatorlib.HorScrollViewIndicator
-        android:id="@+id/horScrollViewIndicator"
-        android:layout_width="100dp"
-        android:layout_height="10dp" />
+            android:id="@+id/horScrollViewIndicator"
+            android:layout_width="100dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="10dp"
+            app:hsviBarColor="@color/colorAccent"
+            app:hsviBgColor="@color/colorPrimaryDark"
+            app:hsviRadius="3dp"/>
 
 </LinearLayout>

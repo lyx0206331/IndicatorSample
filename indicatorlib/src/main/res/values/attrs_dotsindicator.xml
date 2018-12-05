@@ -38,4 +38,10 @@
         <attr name="dotsStrokeWidth" />
         <attr name="dotsStrokeColor" />
     </declare-styleable>
+
+    <declare-styleable name="HorScrollViewIndicator">
+        <attr name="hsviBgColor" format="color|reference"/>
+        <attr name="hsviBarColor" format="color|reference"/>
+        <attr name="hsviRadius" format="dimension|reference"/>
+    </declare-styleable>
 </resources>
