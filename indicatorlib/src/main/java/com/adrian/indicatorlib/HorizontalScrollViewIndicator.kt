@@ -9,9 +9,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.HorizontalScrollView
-import android.widget.LinearLayout
-import java.lang.Exception
-import kotlin.math.log
 
 /**
  * date:2018/12/5 16:48
@@ -28,13 +25,17 @@ class HorScrollViewIndicator @JvmOverloads constructor(
         const val COLOR_BAR = Color.CYAN
     }
 
+    //指示器背景画笔
     private val bgPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG)
     }
+    //指示器进度滑块画笔
     private val barPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG)
     }
+    //HorScrollView滚动距离，自定义监听
     private var mScrollX = 0
+    //HorScrollView的可滚动长度。其值为HorScrollView的内容总宽度与HorScrollView宽度之差
     private var allowScrollWidth = 0
     var mHorScrollView: HorScrollView? = null
         set(value) {
@@ -47,27 +48,30 @@ class HorScrollViewIndicator @JvmOverloads constructor(
                 }
             }
         }
+    //指示器背景颜色
     var mBgColor: Int = COLOR_BACKGROUND
         set(value) {
             field = value
             bgPaint.color = value
             invalidate()
         }
+    //指示器进度滑块颜色
     var mBarColor: Int = COLOR_BAR
         set(value) {
             field = value
             barPaint.color = value
             invalidate()
         }
+    //指示器角半径
     var mRadius = 5f
         set(value) {
             field = value
             invalidate()
         }
+    //指示器滑块宽度。根据HorScrollView中的内容总宽度与HorScrollView宽度的比例计算
     private var mBarWidth = 0
 
     init {
-
         val a = context?.obtainStyledAttributes(attrs, R.styleable.HorScrollViewIndicator, defStyleAttr, 0)
         a?.apply {
             mBgColor = getColor(R.styleable.HorScrollViewIndicator_hsviBgColor, COLOR_BACKGROUND).orZero()
@@ -94,22 +98,25 @@ class HorScrollViewIndicator @JvmOverloads constructor(
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         if (mHorScrollView?.childCount == 0) {
-            throw Exception("ScrollView must has a child")
+            throw Exception("HorScrollView must has a child view")
         }
         val mScrollViewW = mHorScrollView?.width.orZero()
         val mScrollChildViewW = mHorScrollView?.getChildAt(0)?.width.orZero()
         allowScrollWidth = mScrollChildViewW - mScrollViewW
-        allowScrollWidth = (if (allowScrollWidth == 0) 1 else allowScrollWidth)
+        //防止onDraw()方法中分母为0
+        allowScrollWidth = (if (allowScrollWidth <= 0) 1 else allowScrollWidth)
         mBarWidth = (1f * width * mScrollViewW / mScrollChildViewW).toInt()
-//        mBarWidth = if (mBarWidth <= 0) width / 2 else mBarWidth
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         val bgRectF = RectF(0f, 0f, width.toFloat(), height.toFloat())
+        //计算滑块在指示器上的滑动距离
         val offsetX = 1f * (width - mBarWidth) * mScrollX / allowScrollWidth
         val barRectF = RectF(offsetX, 0f, offsetX + mBarWidth, height.toFloat())
+        //绘制指示器背景
         canvas?.drawRoundRect(bgRectF, mRadius, mRadius, bgPaint)
+        //绘制指示器滑块
         canvas?.drawRoundRect(barRectF, mRadius, mRadius, barPaint)
     }
 }
@@ -117,6 +124,7 @@ class HorScrollViewIndicator @JvmOverloads constructor(
 class HorScrollView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     HorizontalScrollView(context, attrs, defStyleAttr) {
 
+    //自定义滚动监听器
     var scrollViewListener: ScrollViewListener? = null
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
