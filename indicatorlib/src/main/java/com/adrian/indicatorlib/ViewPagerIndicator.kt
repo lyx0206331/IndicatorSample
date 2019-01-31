@@ -428,7 +428,7 @@ class WormDotsIndicator @JvmOverloads constructor(
                 if (positionOffset >= 0 && positionOffset < .1f) {
                     xFinalPosition = (horizontalMargin + position * stepX).toFloat()
                     widthFinalPosition = dotsSize.toFloat()
-                } else if (positionOffset in .1f...9f) {
+                } else if (positionOffset in .1f .. .9f) {
                     xFinalPosition = (horizontalMargin + position * stepX).toFloat()
                     widthFinalPosition = dotsSize.toFloat() + stepX
                 } else {
