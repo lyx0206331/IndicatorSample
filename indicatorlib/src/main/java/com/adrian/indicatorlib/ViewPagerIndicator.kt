@@ -269,6 +269,12 @@ class WormDotsIndicator @JvmOverloads constructor(
     var dotsSpacing = dp2px(context, 4).toInt()
     var dotsStrokeWidth = dp2px(context, 2).toInt()
     var dotIndicatorColor = getThemePrimaryColor(context)
+        set(value) {
+            field = value
+            if (dotIndicatorView != null) {
+                setupDotBackground(false, dotIndicatorView!!)
+            }
+        }
     var dotsStrokeColor = dotIndicatorColor
 
     var horizontalMargin: Int = dp2px(context, 24).toInt()
