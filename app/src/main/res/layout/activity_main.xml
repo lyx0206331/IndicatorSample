@@ -29,11 +29,15 @@
         android:id="@+id/dots_indicator_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/dots_indicator"
         android:textColor="@color/md_white_1000"
         android:textSize="12sp"
-        android:visibility="gone" />
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/dotsIndicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/dotsIndicator" />
 
     <com.adrian.indicatorlib.DotsIndicator
         android:id="@+id/dotsIndicator"
@@ -58,8 +62,12 @@
         android:text="@string/spring_dots_indicator"
         android:textColor="@color/md_white_1000"
         android:textSize="12sp"
-        android:visibility="gone"
-        />
+        android:visibility="visible"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/spring_dots_indicator"
+        app:layout_constraintBottom_toBottomOf="@id/spring_dots_indicator"/>
     <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
         android:id="@+id/spring_dots_indicator"
         android:layout_width="wrap_content"
@@ -70,7 +78,7 @@
         app:dotsColor="@color/md_white_1000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dots_indicator"
+        app:layout_constraintTop_toBottomOf="@+id/dotsIndicator"
         />
 
     <TextView
@@ -81,7 +89,7 @@
         android:text="@string/worm_dots_indicator"
         android:textColor="@color/md_white_1000"
         android:textSize="12sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/worm_dots_indicator"
         app:layout_constraintEnd_toStartOf="@+id/worm_dots_indicator"
         app:layout_constraintStart_toStartOf="parent"
