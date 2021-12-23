@@ -69,17 +69,17 @@ class DotsIndicator @JvmOverloads constructor(context: Context, attrs: Attribute
 
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.DotsIndicator, defStyleAttr, 0)
-            dotsSelectedColor = a.getColor(R.styleable.DotsIndicator_dotsSelectedColor, DEFAULT_POINT_COLOR)
-            dotsUnselectedColor = a.getColor(R.styleable.DotsIndicator_dotsUnselectedColor, DEFAULT_POINT_COLOR)
+            dotsSelectedColor = a.getColor(R.styleable.DotsIndicator_di_dots_selected_color, DEFAULT_POINT_COLOR)
+            dotsUnselectedColor = a.getColor(R.styleable.DotsIndicator_di_dots_unselected_color, DEFAULT_POINT_COLOR)
             setUpCircleColors()
 
-            dotsWidthFactor = a.getFloat(R.styleable.DotsIndicator_dotsWidthFactor, 2.5f)
+            dotsWidthFactor = a.getFloat(R.styleable.DotsIndicator_di_dots_width_factor, 2.5f)
             if (dotsWidthFactor < 1) {
                 dotsWidthFactor = 2.5f
             }
-            dotsSize = a.getDimension(R.styleable.DotsIndicator_dotsSize, dotsSize)
-            dotsCornerRadius = a.getDimension(R.styleable.DotsIndicator_dotsCornerRadius, dotsSize / 2)
-            dotsSpacing = a.getDimension(R.styleable.DotsIndicator_dotsSpacing, dotsSpacing)
+            dotsSize = a.getDimension(R.styleable.DotsIndicator_di_dots_size, dotsSize)
+            dotsCornerRadius = a.getDimension(R.styleable.DotsIndicator_di_dots_corner_radius, dotsSize / 2)
+            dotsSpacing = a.getDimension(R.styleable.DotsIndicator_di_dots_spacing, dotsSpacing)
 
             a.recycle()
         } else {
@@ -295,12 +295,12 @@ class WormDotsIndicator @JvmOverloads constructor(
 
         attrs?.apply {
             val a = context.obtainStyledAttributes(this, R.styleable.WormDotsIndicator, defStyleAttr, 0)
-            dotIndicatorColor = a.getColor(R.styleable.WormDotsIndicator_dotsColor, dotIndicatorColor)
-            dotsStrokeColor = a.getColor(R.styleable.WormDotsIndicator_dotsStrokeColor, dotsStrokeColor)
-            dotsSize = a.getDimensionPixelSize(R.styleable.WormDotsIndicator_dotsSize, dotsSize)
-            dotsSpacing = a.getDimensionPixelSize(R.styleable.WormDotsIndicator_dotsSpacing, dotsSpacing)
-            dotsCornerRadius = a.getDimension(R.styleable.WormDotsIndicator_dotsCornerRadius, dotsCornerRadius)
-            dotsStrokeWidth = a.getDimensionPixelSize(R.styleable.WormDotsIndicator_dotsStrokeWidth, dotsStrokeWidth)
+            dotIndicatorColor = a.getColor(R.styleable.WormDotsIndicator_wdi_dots_color, dotIndicatorColor)
+            dotsStrokeColor = a.getColor(R.styleable.WormDotsIndicator_wdi_dots_stroke_color, dotsStrokeColor)
+            dotsSize = a.getDimensionPixelSize(R.styleable.WormDotsIndicator_wdi_dots_size, dotsSize)
+            dotsSpacing = a.getDimensionPixelSize(R.styleable.WormDotsIndicator_wdi_dots_spacing, dotsSpacing)
+            dotsCornerRadius = a.getDimension(R.styleable.WormDotsIndicator_wdi_dots_corner_radius, dotsCornerRadius)
+            dotsStrokeWidth = a.getDimensionPixelSize(R.styleable.WormDotsIndicator_wdi_dots_stroke_width, dotsStrokeWidth)
 
             a.recycle()
         }
