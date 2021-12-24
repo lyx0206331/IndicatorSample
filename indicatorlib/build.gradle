@@ -1,18 +1,28 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'maven-publish'
+    id 'kotlin-android-extensions'
+}
 
-apply plugin: 'kotlin-android'
+repositories {
+    mavenCentral()
+    google()
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
 
-apply plugin: 'kotlin-android-extensions'
+group = 'com.github.lyx0206331'
+version = '1.0.0'
 
 android {
     compileSdkVersion 31
 
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 31
-
+        versionCode 1
+        versionName "1.0.0"
     }
 
     buildTypes {
@@ -22,6 +32,14 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
 }
 
 dependencies {
@@ -29,4 +47,28 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "androidx.dynamicanimation:dynamicanimation:$appcompatVersion"
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.lyx0206331'
+                artifactId = 'indicatorlib'
+                version = '1.0.0'
+            }
+
+            debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = 'com.github.lyx0206331'
+                artifactId = 'indicatorlib-debug'
+                version = '1.0.0'
+            }
+
+        }
+    }
 }
