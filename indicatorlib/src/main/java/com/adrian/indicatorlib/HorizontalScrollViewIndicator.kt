@@ -13,7 +13,7 @@ import android.widget.HorizontalScrollView
 /**
  * date:2018/12/5 16:48
  * author：RanQing
- * description：水平滚动指示器
+ * description：水平滚动指示器，需搭配HorScrollView使用
  */
 class HorScrollViewIndicator @JvmOverloads constructor(
     context: Context?,
@@ -40,7 +40,7 @@ class HorScrollViewIndicator @JvmOverloads constructor(
     var mHorScrollView: HorScrollView? = null
         set(value) {
             field = value
-            value?.scrollViewListener = object : ScrollViewListener {
+            value?.scrollViewListener = object : HorScrollView.ScrollViewListener {
                 override fun onScrollChanged(scrollView: HorScrollView, x: Int, y: Int, oldX: Int, oldY: Int) {
 //                    logE("scroll x:$x, y:$y, oldx:$oldX, oldy:$oldY")
                     mScrollX = x
@@ -74,9 +74,9 @@ class HorScrollViewIndicator @JvmOverloads constructor(
     init {
         val a = context?.obtainStyledAttributes(attrs, R.styleable.HorScrollViewIndicator, defStyleAttr, 0)
         a?.apply {
-            mBgColor = getColor(R.styleable.HorScrollViewIndicator_hsviBgColor, COLOR_BACKGROUND).orZero()
-            mBarColor = getColor(R.styleable.HorScrollViewIndicator_hsviBarColor, COLOR_BAR).orZero()
-            mRadius = getDimension(R.styleable.HorScrollViewIndicator_hsviRadius, 5f)
+            mBgColor = getColor(R.styleable.HorScrollViewIndicator_hsvi_background_color, COLOR_BACKGROUND).orZero()
+            mBarColor = getColor(R.styleable.HorScrollViewIndicator_hsvi_bar_color, COLOR_BAR).orZero()
+            mRadius = getDimension(R.styleable.HorScrollViewIndicator_hsvi_radius, 5f)
         }
         a?.recycle()
     }
@@ -104,7 +104,7 @@ class HorScrollViewIndicator @JvmOverloads constructor(
         val mScrollChildViewW = mHorScrollView?.getChildAt(0)?.width.orZero()
         allowScrollWidth = mScrollChildViewW - mScrollViewW
         //防止onDraw()方法中分母为0
-        allowScrollWidth = (if (allowScrollWidth <= 0) 1 else allowScrollWidth)
+        allowScrollWidth = allowScrollWidth.coerceAtLeast(1)
         mBarWidth = (1f * width * mScrollViewW / mScrollChildViewW).toInt()
     }
 
@@ -121,6 +121,9 @@ class HorScrollViewIndicator @JvmOverloads constructor(
     }
 }
 
+/**
+ * 此类搭配HorScrollViewIndicator使用
+ */
 class HorScrollView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     HorizontalScrollView(context, attrs, defStyleAttr) {
 
@@ -131,10 +134,10 @@ class HorScrollView @JvmOverloads constructor(context: Context?, attrs: Attribut
         super.onScrollChanged(l, t, oldl, oldt)
         scrollViewListener?.onScrollChanged(this, l, t, oldl, oldt)
     }
-}
 
-interface ScrollViewListener {
-    fun onScrollChanged(scrollView: HorScrollView, x: Int, y: Int, oldX: Int, oldY: Int)
+    interface ScrollViewListener {
+        fun onScrollChanged(scrollView: HorScrollView, x: Int, y: Int, oldX: Int, oldY: Int)
+    }
 }
 
 fun logE(msg: String) {

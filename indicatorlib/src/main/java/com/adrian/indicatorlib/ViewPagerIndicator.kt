@@ -271,7 +271,7 @@ class WormDotsIndicator @JvmOverloads constructor(
     var dotIndicatorColor = getThemePrimaryColor(context)
         set(value) {
             field = value
-            if (dotIndicatorView != null) {
+            dotIndicatorView?.apply {
                 setupDotBackground(false, dotIndicatorView!!)
             }
         }
@@ -476,13 +476,11 @@ class WormDotsIndicator @JvmOverloads constructor(
     }
 }
 
-fun dp2px(context: Context, dp: Int): Float {
-    return context.resources.displayMetrics.density * dp
-}
+fun dp2px(context: Context, dp: Int): Float = context.resources.displayMetrics.density * dp
 
 fun getThemePrimaryColor(context: Context): Int {
     val value = TypedValue()
-    context.theme.resolveAttribute(R.attr.colorPrimary, value, true)
+    context.theme.resolveAttribute(android.R.attr.colorPrimary, value, true)
     return value.data
 }
 

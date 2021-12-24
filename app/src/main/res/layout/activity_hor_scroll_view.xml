@@ -32,8 +32,8 @@
             android:layout_width="100dp"
             android:layout_height="6dp"
             android:layout_marginTop="10dp"
-            app:hsviBarColor="@color/colorAccent"
-            app:hsviBgColor="@color/colorPrimaryDark"
-            app:hsviRadius="3dp"/>
+            app:hsvi_bar_color="@color/colorAccent"
+            app:hsvi_background_color="@color/colorPrimaryDark"
+            app:hsvi_radius="3dp"/>
 
 </LinearLayout>

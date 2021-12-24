@@ -1,8 +1,10 @@
 package com.adrian.indicatorsample.viewpager
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.adrian.indicatorsample.R
+import com.adrian.indicatorsample.scrollview.HorScrollViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,5 +24,8 @@ class MainActivity : AppCompatActivity() {
         dotsIndicator.mViewPager = viewPager
 //        dotsIndicator.dotsClickable = false
 //        dotsIndicator.dotsSelectedColor = Color.CYAN
+        horDotsIndcatorAct.setOnClickListener {
+            startActivity(Intent(this, HorScrollViewActivity::class.java))
+        }
     }
 }
